@@ -25,14 +25,16 @@ const theme = createMuiTheme(
         main: "#C38B54",
       },
       text:{
-          primary: "#FFFFF"
+        primary: 'rgba(0, 0, 0, 0.87)',
+        secondary: 'rgba(0, 0, 0, 0.54)'
       }
     },
 
     /**
      * @see https://material-ui.com/customization/globals/#default-props
      */
-    
+    props: {
+    }
   }
 );
 

@@ -3,16 +3,36 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import * as messages from '../../messages/messages';
-import { Radio, Button, TextField, Grid, FormControl, FormHelperText, FormLabel, RadioGroup, FormControlLabel, Select } from '@material-ui/core'
+import { TextField, FormControl } from '@material-ui/core'
 
 import { Form, FormRow, FormField } from '../../components/Form';
 import { CountrySelect } from '../../components/CountrySelect';
+import { FormButton } from '../../components/FormButton';
+import { RadioButton } from '../../components/RadioButton';
 
 const useStyles = makeStyles(theme => ({
     root: {
-        paddingTop: "5%",
-        paddingLeft: "20%",
-        paddingRight: "20%"
+        [theme.breakpoints.up('md')]:{
+            paddingTop: "5%",
+            paddingLeft: "20%",
+            paddingRight: "20%"
+        },
+        [theme.breakpoints.up('lg')]:{
+            paddingTop: "5%",
+            paddingLeft: "30%",
+            paddingRight: "30%"
+        }
+    },
+    form: {
+        backgroundColor: "white",
+        border: "1px solid grey",
+        borderRadius: '8px',
+        padding: theme.spacing(4),
+        [theme.breakpoints.down('sm')]:{
+            padding: theme.spacing(1),
+            border: 'none',
+            backgroundColor: 'transparent'
+        }
     }
 }))
 
@@ -45,7 +65,7 @@ const TextInput = ({id, error, touched, ...rest}) => (
 
 const DatePicker = ({id, error,touched, ...rest}) => (
     <FormField>
-        <FormControl>
+        <FormControl style={{width: "100%"}}>
             <TextField
                 name={id}
                 variant="outlined"
@@ -59,40 +79,13 @@ const DatePicker = ({id, error,touched, ...rest}) => (
     </FormField>
 )
 
-const RadioButton = ({value, error, touched, id, handleChange, ...props}) => (
-    <Grid item>
-        <FormControl error={error && touched}>
-            <FormLabel component="legend">Género con el que te identificas</FormLabel>
-            <RadioGroup row aria-label="gender" name={id} value={value} onChange={handleChange} {...props}>
-                <FormControlLabel value="male" control={<Radio />} label="Hombre" />
-                <FormControlLabel value="female" control={<Radio />} label="Mujer" />
-                <FormControlLabel value="other" control={<Radio />} label="Otro" />
-            </RadioGroup>
-            {error && touched && <FormHelperText error={error && touched}>{error}</FormHelperText>}
-        </FormControl>
-    </Grid>
-)
-
-const FormButton = ({label, ...rest}) => (
-    <Grid item>
-        <Button variant="outlined" {...rest}>
-            {label}
-        </Button>
-    </Grid>
-)
-
-
-
 export default function UserForm({handleSubmit, initialValues, handleReset}) {
     const classes = useStyles();
 
-    const handleRadioChange = (evt) => {
-        console.log(evt)
-    }
     return (
         <Formik
             validationSchema={schema}
-            onSubmit={handleSubmit}
+            onSubmit={(values, {resetForm}) => handleSubmit(values, resetForm)}
             initialValues={initialValues}>
                 {({
                     handleSubmit,
@@ -103,7 +96,11 @@ export default function UserForm({handleSubmit, initialValues, handleReset}) {
                     errors,
                     setFieldValue
                 }) => (
-                        <Form onSubmit={handleSubmit} noValidate autoComplete="off" className={classes.root}>
+                        <Form 
+                            onSubmit={handleSubmit} 
+                            noValidate 
+                            autoComplete="off" 
+                            classes={{root: classes.root, form: classes.form}}>
                             <FormRow>
                                 <TextInput 
                                     required 

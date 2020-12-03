@@ -1,8 +1,8 @@
 import { Grid } from '@material-ui/core';
 
-export const Form = ({children,...rest}) => (
-    <form {...rest}>
-        <Grid direction={"column"} container spacing={2}>
+export const Form = ({children,classes,...rest}) => (
+    <form {...rest} className={classes.root}>
+        <Grid className={classes.form} direction={"column"} container spacing={2}>
             {children}
         </Grid>
     </form>
