@@ -31,7 +31,6 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down('sm')]:{
             padding: theme.spacing(1),
             border: 'none',
-            backgroundColor: 'transparent'
         }
     }
 }))
