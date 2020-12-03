@@ -36,20 +36,6 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-
-const schema = Yup.object({
-    name: Yup.string().required(messages.FORM_FIELD_REQUIRED),
-    lastname: Yup.string().required(messages.FORM_FIELD_REQUIRED),
-    gender: Yup.string().required(messages.FORM_FIELD_REQUIRED),
-    birthday: Yup.date(messages.FORM_INVALID_DATE)
-                .max(new Date(), messages.FORM_MAX_DATE)
-                .required(messages.FORM_FIELD_REQUIRED),
-    country: Yup.string(),
-    phonenumber: Yup.string().required(messages.FORM_FIELD_REQUIRED),
-    email: Yup.string().email(messages.FORM_INVALID_EMAIL).required(messages.FORM_FIELD_REQUIRED),
-    comments: Yup.string()
-})
-
 const TextInput = ({id, error, touched, ...rest}) => (
     <FormField>
         <FormControl component="fieldset" style={{width:"100%"}}>
@@ -79,8 +65,27 @@ const DatePicker = ({id, error,touched, ...rest}) => (
     </FormField>
 )
 
-export default function UserForm({handleSubmit, initialValues, handleReset}) {
+export default function UserForm({handleSubmit, verifyEmail, initialValues, handleReset}) {
     const classes = useStyles();
+    const schema = Yup.object({
+        name: Yup.string().required(messages.FORM_FIELD_REQUIRED),
+        lastname: Yup.string().required(messages.FORM_FIELD_REQUIRED),
+        gender: Yup.string().required(messages.FORM_FIELD_REQUIRED),
+        birthday: Yup.date(messages.FORM_INVALID_DATE)
+                    .max(new Date(), messages.FORM_MAX_DATE)
+                    .required(messages.FORM_FIELD_REQUIRED),
+        country: Yup.string(),
+        phonenumber: Yup.string().required(messages.FORM_FIELD_REQUIRED),
+        email: Yup.string()
+                    .email(messages.FORM_INVALID_EMAIL)
+                    .required(messages.FORM_FIELD_REQUIRED),
+                    /*test('Unique email', messages.FORM_EMAIL_EXIST,function(value){
+                        return new Promise((resolve,reject) => {
+                            verifyEmail(value).then(exist => resolve(exist))
+                        })
+                    })*/
+        comments: Yup.string()
+    })
 
     return (
         <Formik

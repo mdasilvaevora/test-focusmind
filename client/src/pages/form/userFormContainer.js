@@ -1,6 +1,6 @@
 import React from 'react'
 import UserForm from './userForm';
-import {registerUser} from '../../api/api';
+import {registerUser, verifyEmail} from '../../api/api';
 
 export default function UserFormContainer() {
     const initialValues = {
@@ -22,11 +22,16 @@ export default function UserFormContainer() {
     const handleReset = resetForm => {
         resetForm(initialValues)
     }
+
+    const verifyEmail = email => {
+        return verifyEmail(email)
+    }
     return (
             <UserForm 
                 initialValues={initialValues} 
                 handleReset={handleReset} 
                 handleSubmit={handleSubmit}
+                verifyEmail={verifyEmail}
             />
     )
 }
