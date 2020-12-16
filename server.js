@@ -22,6 +22,9 @@ mongoose
   .then(() => console.log("MongoDB successfully connected"))
   .catch(err => console.log(err));
 
+  
+app.use(express.static(path.join(__dirname, '/client/build')));
+  
 app.use(routes);
 
 app.get('*', (req, res) => {
